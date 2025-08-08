@@ -17,9 +17,10 @@ jobs:
           fetch-depth: 0
 
       - name: get changes
+        id: list-changes
         run: | 
           chmod +x .github/scripts/*
-          .github/scripts/list-changes.sh
+          .github/scripts/list-changes.sh "${{ github.event_name }}" "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}"
 
       - name: run tests
         if: ${{ steps.list-changes.outputs.changes != '' }}
