@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: get changes
+      - name: list changes
         id: list-changes
         run: | 
           chmod +x .github/scripts/*
