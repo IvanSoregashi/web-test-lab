@@ -26,13 +26,7 @@ else
     CHANGED_FILES=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD")
 fi
 
-if [ -n "$GITHUB_OUTPUT" ]; then
-    echo "output changes to github output"
-    echo "changes=$CHANGED_FILES" >> $GITHUB_OUTPUT
-else
-    echo "GITHUB_OUTPUT is not set. THIS IS AN ISSUE"
-    echo "changes=$CHANGED_FILES"
-fi
+echo "changes: $CHANGED_FILES"
 
 PYTHON=$(echo "$CHANGED_FILES" | grep "^python/" || true)
 if [ -n "$PYTHON" ]; then
