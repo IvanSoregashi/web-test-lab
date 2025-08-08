@@ -10,4 +10,9 @@ else
     CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
 fi
 
-echo "changes=$CHANGED_FILES" >> $GITHUB_OUTPUT
+# Output for GitHub Actions
+if [ -n "$GITHUB_OUTPUT" ]; then
+    echo "changes=$CHANGED_FILES" >> "$GITHUB_OUTPUT"
+else
+    echo "changes=$CHANGED_FILES"
+fi
