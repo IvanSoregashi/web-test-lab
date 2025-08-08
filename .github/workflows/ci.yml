@@ -11,7 +11,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: checkout
         uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 0
+
+      - name: get changes
+        run: | 
+          chmod +x .github/scripts/
+          .github/scripts/list-changes.sh
+
+      - name: run tests
+        if: ${{ steps.list-changes.outputs.changes != '' }}
+        run: |
+          echo "Changes detected: ${{ steps.list-changes.outputs.changes }}"
