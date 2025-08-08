@@ -1,4 +1,4 @@
-name: Web Test Lab CI
+name: web test lab CI
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
 
       - name: get changes
         run: | 
-          chmod +x .github/scripts/
+          chmod +x .github/scripts/*
           .github/scripts/list-changes.sh
 
       - name: run tests
