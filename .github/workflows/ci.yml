@@ -16,7 +16,7 @@ jobs:
       javascript: ${{ steps.list-changes.outputs.javascript_projects }}
       other: ${{ steps.list-changes.outputs.other_files }}
     
-  steps:
+    steps:
       - name: checkout
         uses: actions/checkout@v4
         with:
