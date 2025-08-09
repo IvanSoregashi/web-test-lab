@@ -25,19 +25,19 @@ if [ -n "$OTHER" ]; then
     echo "other_files=$OTHER" >> $GITHUB_OUTPUT
 fi
 
-PYTHON_PROJECTS=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD" -- 'python/*' \
+PYTHON_PROJECTS=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD" -- 'python/*/**' \
                 | cut -d/ -f2 | sort -u \
                 | jq -R -s -c 'split("\n") | map(select(length>0))')
 echo "python projects: $PYTHON_PROJECTS"
 echo "python_projects=$PYTHON_PROJECTS" >> $GITHUB_OUTPUT
 
-JAVA_PROJECTS=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD" -- 'java/*' \
+JAVA_PROJECTS=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD" -- 'java/*/**' \
                 | cut -d/ -f2 | sort -u \
                 | jq -R -s -c 'split("\n") | map(select(length>0))')
 echo "java projects: $JAVA_PROJECTS"
 echo "java_projects=$JAVA_PROJECTS" >> $GITHUB_OUTPUT
 
-JAVASCRIPT_PROJECTS=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD" -- 'javascript/*' \
+JAVASCRIPT_PROJECTS=$(git diff --name-only "$DIFF_BASE" "$DIFF_HEAD" -- 'javascript/*/**' \
                 | cut -d/ -f2 | sort -u \
                 | jq -R -s -c 'split("\n") | map(select(length>0))')
 echo "javascript projects: $JAVASCRIPT_PROJECTS"
