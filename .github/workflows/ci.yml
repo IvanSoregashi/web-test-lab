@@ -32,11 +32,31 @@ jobs:
     needs: detect
     if: needs.detect.outputs.python != '[]'
     runs-on: ubuntu-latest
+
+    env:
+      THE_INTERNET_HOST: localhost
+      THE_INTERNET_PORT: 7357
+      BROWSER_NAME: chrome
+      BROWSER_OPTIONS_CHROME:  --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
+      BROWSER_OPTIONS_FIREFOX: --headless=new
+      BROWSER_OPTIONS_EDGE: --headless=new
+
     strategy:
       fail-fast: false
       matrix:
         project: ${{ fromJson(needs.detect.outputs.python) }}
     
+    services:
+      the-internet:
+        image: gprestes/the-internet
+        ports:
+          - 7357:5000
+        options: >-
+          --health-cmd "curl -f http://localhost:5000 || exit 1"
+          --health-interval 30s
+          --health-timeout 10s
+          --health-retries 5
+
     steps:
       - name: checkout
         uses: actions/checkout@v4
@@ -66,6 +86,13 @@ jobs:
     needs: detect
     if: needs.detect.outputs.java != '[]'
     runs-on: ubuntu-latest
+    env:
+      THE_INTERNET_HOST: localhost
+      THE_INTERNET_PORT: 7357
+      BROWSER_NAME: chrome
+      BROWSER_OPTIONS_CHROME:  --remote-allow-origins=*;--disable-gpu;--no-sandbox;--disable-dev-shm-usage;--headless=new;--window-size=1920,1080
+      BROWSER_OPTIONS_FIREFOX: --headless=new
+      BROWSER_OPTIONS_EDGE: --headless=new
 
     strategy:
       fail-fast: false
