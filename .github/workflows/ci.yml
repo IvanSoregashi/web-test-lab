@@ -50,8 +50,6 @@ jobs:
 
       - name: install uv
         uses: astral-sh/setup-uv@v6
-        with:
-          version-file: "python/${{ matrix.project }}/pyproject.toml"
 
       - name: install dependencies
         working-directory: python/${{ matrix.project }}
