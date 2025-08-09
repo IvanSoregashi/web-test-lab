@@ -7,12 +7,18 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  detect:
     runs-on: ubuntu-latest
-
-    steps:
+    
+    outputs:
+      python: ${{ steps.list-changes.outputs.python_projects }}
+      java: ${{ steps.list-changes.outputs.java_projects }}
+      javascript: ${{ steps.list-changes.outputs.javascript_projects }}
+      other: ${{ steps.list-changes.outputs.other_files }}
+    
+  steps:
       - name: checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -21,8 +27,38 @@ jobs:
         run: | 
           chmod +x .github/scripts/*
           .github/scripts/list-changes.sh "${{ github.event_name }}" "${{ github.event.pull_request.base.sha }}" "${{ github.sha }}"
+  
+  python-tests:
+    needs: detect
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJson(needs.detect.outputs.python) }}
+    
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: set up python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: "python/${{ matrix.project }}/.python-version"
+
+      - name: install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          version-file: "python/${{ matrix.project }}/pyproject.toml"
+
+      - name: install dependencies
+        working-directory: python/${{ matrix.project }}
+        run: |
+          uv sync
 
       - name: run tests
-        if: ${{ steps.list-changes.outputs.changes != '' }}
+        working-directory: python/${{ matrix.project }}
         run: |
-          echo "Changes detected: ${{ steps.list-changes.outputs.changes }}"
+          uv run pytest
