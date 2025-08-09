@@ -30,7 +30,7 @@ jobs:
   
   python-tests:
     needs: detect
-    if: needs.detect.outputs.python != ''
+    if: needs.detect.outputs.python != '[]'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -64,7 +64,7 @@ jobs:
 
   java-tests:
     needs: detect
-    if: needs.detect.outputs.java != ''
+    if: needs.detect.outputs.java != '[]'
     runs-on: ubuntu-latest
 
     strategy:
