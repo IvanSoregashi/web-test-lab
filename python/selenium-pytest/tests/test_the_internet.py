@@ -1,9 +1,7 @@
 import pytest
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
-import time
 
 
 def test_title(the_internet: WebDriver):
@@ -27,3 +25,5 @@ def test_removing_elements(add_remove_page: WebDriver):
 
 def test_basic_auth_success(basic_auth_page: WebDriver):
     assert basic_auth_page.find_element(By.CSS_SELECTOR, "div.example p").text == "Congratulations! You must have the proper credentials."
+
+
