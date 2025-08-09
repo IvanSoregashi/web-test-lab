@@ -62,4 +62,33 @@ jobs:
           chmod +x test.sh
           uv run -- ./test.sh
 
+  java-tests:
+    needs: detect
+    runs-on: ubuntu-latest
 
+    strategy:
+      fail-fast: false
+      matrix:
+        project: ${{ fromJson(needs.detect.outputs.java) }}
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: set up java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'corretto'
+          java-version: '21'
+
+      - name: install dependencies
+        working-directory: java/${{ matrix.project }}
+        run: |
+          mvn clean install
+
+      - name: run tests
+        working-directory: java/${{ matrix.project }}
+        run: |
+          mvn test
