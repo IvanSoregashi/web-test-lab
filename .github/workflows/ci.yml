@@ -57,8 +57,8 @@ jobs:
           uv sync
 
       - name: run tests
+        working-directory: python/${{ matrix.project }}
         run: |
-          chmod +x python/${{ matrix.project }}/test.sh
-          python/${{ matrix.project }}/test.sh
+          uv run -- ./test.sh
 
 
