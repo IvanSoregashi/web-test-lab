@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "running selenium tests"
+echo "running python tests"
 pytest

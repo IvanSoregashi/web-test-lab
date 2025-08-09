@@ -59,6 +59,7 @@ jobs:
       - name: run tests
         working-directory: python/${{ matrix.project }}
         run: |
+          chmod +x test.sh
           uv run -- ./test.sh
 
 

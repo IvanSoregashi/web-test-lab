@@ -1,4 +1,4 @@
 #!/bin/bash
 
-echo "running playwright tests"
+echo "running python tests"
 pytest
