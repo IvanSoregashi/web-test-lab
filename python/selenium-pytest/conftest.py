@@ -55,3 +55,27 @@ def add_remove_page(the_internet: WebDriver) -> WebDriver:
 def basic_auth_page(driver: WebDriver, config: Config) -> WebDriver:
     driver.get(config.the_internet.basic_auth_url)
     return driver
+
+
+@pytest.fixture(scope="function")
+def context_menu_page(the_internet: WebDriver) -> WebDriver:
+    the_internet.find_element(By.LINK_TEXT, "Context Menu").click()
+    return the_internet
+
+
+@pytest.fixture(scope="function")
+def drag_and_drop_page(the_internet: WebDriver) -> WebDriver:
+    the_internet.find_element(By.LINK_TEXT, "Drag and Drop").click()
+    return the_internet
+
+
+@pytest.fixture(scope="function")
+def dropdown_page(the_internet: WebDriver) -> WebDriver:
+    the_internet.find_element(By.LINK_TEXT, "Dropdown").click()
+    return the_internet
+
+
+@pytest.fixture(scope="function")
+def dynamic_controls_page(the_internet: WebDriver) -> WebDriver:
+    the_internet.find_element(By.LINK_TEXT, "Dynamic Controls").click()
+    return the_internet
